@@ -12,6 +12,7 @@ print("4. Brownies Fudgy    Rp35000")
 print("5. Donat Kentang     Rp25000")
 
 # KASIR
+total = 0
 jumlah_pesanan = []
 print("------------------------------")
 while True:
