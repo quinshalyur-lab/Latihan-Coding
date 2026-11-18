@@ -1,0 +1,116 @@
+print("=====SELAMAT DATANG DI T0KO KUE MANIS QUINN=====")
+import timeit
+
+# DAFTAR MENU
+nama = input ("nama: ")
+print("------------------------")
+print("DAFTAR MENU")
+print("1. Cookies Matcha     Rp10000")
+print("2. Cookies Coklat     Rp8000")
+print("3. Bolu Gulung       Rp45000")
+print("4. Brownies Fudgy    Rp35000")
+print("5. Donat Kentang     Rp25000")
+
+# KASIR
+jumlah_pesanan = []
+print("------------------------------")
+while True:
+    kode= input("Kode Produk : ")
+    if kode == "1":
+        nama_item = "Cookies Matcha"
+        harga = 10000
+    elif kode == "2":
+        nama_item = "Cookies Coklat"
+        harga = 8000
+    elif kode == "3":
+        nama_item = "Bolu Gulung"
+        harga = 45000
+    elif kode == "4":
+        nama_item = "Brownies Fudgy"
+        harga = 35000
+    elif kode == "5":
+        nama_item = "Donat Kentang"
+        harga = 25000
+    else:
+        print("Kode Tidak Ada!")
+        continue
+    jumlah = int(input("Jumlah      : "))
+    subtotal = harga * jumlah
+    total += subtotal
+    jumlah_pesanan.append([nama_item, jumlah, harga, subtotal])
+    print(nama_item, "x", jumlah, "= Rp", subtotal)
+    
+    if input("ulangi (y/n): ").lower() != "y":
+        break 
+
+
+# DISKON
+if total >= 300000:
+    diskon = total * 0.4
+    print("Selamat😍, kamu mendapatkan diskon sebesar 40%")
+elif (total >= 200000):
+    diskon = total * 0.2
+    print("Selamat😍, kamu mendapatkan diskon sebesar 20%")
+else:
+    diskon = 0
+    print("maaf🙂, kamu belum bisa mendapatkan diskon")
+
+
+# ONGKIR
+diantar = input("Diantar? (y/n): ").lower()
+ongkir = 0
+if diantar == "y":
+    jarak = float(input("Masukkan jarak pengantaran (km): "))
+    if total >= 100000:
+        ongkir = 5000
+    else:
+        ongkir = 10000
+else:
+    ongkir = 0
+print("--------------------------------")
+
+total_bayar = total - diskon + ongkir
+
+print("Total transaksi :", total)
+print("Diskon          :", diskon)
+print("Ongkir          :", ongkir)
+print("Jumlah bayar    :", total_bayar)
+
+uang = int(input("Uang Tunai    : "))
+kembalian = uang - total_bayar
+print("Uang Kembalian:", kembalian)
+print("----------------------------------------")
+print("TERIMAKASIH BANYAK, DATANG KEMBALI YA!!😍")
+
+
+#UKUR WAKTU
+data_uji = [50000,150000,250000,350000,500000]
+def diskon_ifelif(t):
+    if t >= 300000:
+        return t * 0.3
+    elif t >= 200000:
+        return t * 0.2
+    return 0
+tabel_diskon = [(300000, 0.3), (200000, 0.2)]
+def diskon_tabel(t):
+    for batas, rate in tabel_diskon:
+        if t >= batas:
+            return t * rate
+    return 0
+
+def uji_cara1():
+    for t in data_uji:
+        diskon_ifelif(t)
+
+def uji_cara2():
+    for t in data_uji:
+        diskon_tabel(t)
+
+
+waktu1 = timeit.timeit(uji_cara1, number=100000)
+waktu2 = timeit.timeit(uji_cara2, number=100000)
+print("Waktu cara 1 (if-elif):", round(waktu1, 4), "detik")
+print("Waktu cara 2 (tabel)  :", round(waktu2, 4), "detik")
+
+#JUMLAH BARIS KODE
+print("Baris cara 1: 6 | Baris cara 2: 6 (5 fungsi + 1 tabel)")
